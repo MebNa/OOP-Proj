@@ -1,6 +1,5 @@
 package lib.manager.project;
 
-import mainlibrary.DB;
 import java.sql.*;
 public class LibrarianDao {
 

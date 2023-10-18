@@ -1,6 +1,5 @@
 package lib.manager.project;
 
-import mainlibrary.DB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,9 +15,10 @@ public class UsersDao {
 		boolean status=false;
 		try{
 			Connection con=DB.getConnection();
+                        final String Pass_encrypted = CryptPass.cryptPass(password);
 			PreparedStatement ps=con.prepareStatement("select * from users where UserName=? and UserPass=?");
 			ps.setString(1,name);
-			ps.setString(2,password);
+			ps.setString(2,Pass_encrypted);
 			ResultSet rs=ps.executeQuery();
 			status=rs.next();
 			con.close();
