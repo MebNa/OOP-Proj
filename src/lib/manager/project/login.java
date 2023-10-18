@@ -47,7 +47,7 @@ public class login extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(204, 0, 255));
 
-        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\Anbewwwwwwwwwwwwww\\Desktop\\Screenshot 2023-10-16 164623.png")); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lib/manager/project/Screenshot 2023-10-16 164623.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
