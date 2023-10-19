@@ -51,6 +51,8 @@ public class signup extends javax.swing.JFrame {
         username = new javax.swing.JTextField();
         password = new javax.swing.JPasswordField();
         confirmpassword = new javax.swing.JPasswordField();
+        jLabel6 = new javax.swing.JLabel();
+        fullname = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -87,6 +89,8 @@ public class signup extends javax.swing.JFrame {
 
         jLabel4.setText("Email");
 
+        jLabel6.setText("Fullname");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -95,6 +99,10 @@ public class signup extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(31, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addGap(80, 80, 80)
+                        .addComponent(jButton3))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(choice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -109,14 +117,17 @@ public class signup extends javax.swing.JFrame {
                                     .addComponent(password)
                                     .addComponent(confirmpassword)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35)
-                                .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(5, 5, 5))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addGap(80, 80, 80)
-                        .addComponent(jButton3)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(35, 35, 35))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addGap(83, 83, 83)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(username, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                                    .addComponent(fullname))))
+                        .addGap(5, 5, 5)))
                 .addGap(103, 103, 103))
         );
         layout.setVerticalGroup(
@@ -128,7 +139,11 @@ public class signup extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(69, 69, 69)
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(fullname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -171,11 +186,12 @@ public class signup extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String Uname,Pass,ConfirmPass,Email;
+        String Uname,Pass,ConfirmPass,Email,FullName;
         Uname = username.getText();
         Pass = String.valueOf(password.getPassword());  
         ConfirmPass = String.valueOf(confirmpassword.getPassword());
         Email = email.getText();
+        FullName = fullname.getText();
 
 
         if(Uname.isEmpty()) {
@@ -236,13 +252,14 @@ public class signup extends javax.swing.JFrame {
                         maxId = rs.getInt("maxId");
                     }
                     int librarianId = maxId +1;
-                    PreparedStatement statement = conn.prepareStatement("INSERT INTO myTable (LibrarianID,Fullname,UserName,Password,Email) VALUES (?, ?, ?,?,?)");
+                    PreparedStatement statement = conn.prepareStatement("INSERT INTO librarian (LibrarianID,Fullname,UserName,Password,Email,RegDate) VALUES (?, ?, ?,?,?,?)");
 
                     statement.setInt(1, librarianId);
-                    statement.setString(2, Pass);
-                    statement.setDate(5, sqlDate);
-                    statement.setString(4, Uname);
+                    statement.setString(2, FullName);
+                    statement.setString(3,Uname);
+                    statement.setString(4, Pass_encrypted);
                     statement.setString(5, Email);
+                    statement.setDate(6, sqlDate);
                     
                     int rowsInserted = statement.executeUpdate();
 
@@ -269,14 +286,15 @@ public class signup extends javax.swing.JFrame {
                         maxId = rs.getInt("maxId");
                     }
                     int userId = maxId +1;
-                    PreparedStatement statement = conn.prepareStatement("INSERT INTO users (UserID,UserPass,RegDate,UserName, Email) VALUES (?, ?, ?,?,?)");
-
+                    PreparedStatement statement = conn.prepareStatement("INSERT INTO users (UserID,UserPass,RegDate,UserName, Email,FullName) VALUES (?, ?, ?,?,?,?)");
+                    
                     statement.setInt(1, userId);
                     statement.setString(2, Pass_encrypted);
                     statement.setDate(3, sqlDate);
                     statement.setString(4, Uname);
                     statement.setString(5, Email);
-                    
+                    statement.setString(6, FullName);
+                    System.out.println(statement);
                     int rowsInserted = statement.executeUpdate();
 
                     if (rowsInserted > 0) {
@@ -329,6 +347,7 @@ public class signup extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> choice;
     private javax.swing.JPasswordField confirmpassword;
     private javax.swing.JTextField email;
+    private javax.swing.JTextField fullname;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
@@ -336,6 +355,7 @@ public class signup extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPasswordField password;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables

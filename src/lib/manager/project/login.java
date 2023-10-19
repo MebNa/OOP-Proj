@@ -189,10 +189,10 @@ public class login extends javax.swing.JFrame {
         Pass_encrypted = CryptPass.cryptPass(Pass);
         System.out.println(Uname+" "+Pass);
         if(IsLibrarian) {
-            if(LibrarianDao.validate(Uname,Pass)) {
+            if(LibrarianDao.validate(Uname,Pass_encrypted)) {
                 this.dispose();
                 System.out.println("an dep trai");
-                //LibrarianSuccess.main(new String[]{Uname,Pass});
+                LibrarianSuccess.main(new String[]{Uname,Pass_encrypted});
             }else{
                 JOptionPane.showMessageDialog(this, "Sai tài khoản hoặc mật khẩu");
                 username.setText("");
