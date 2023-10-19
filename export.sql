@@ -152,10 +152,11 @@ CREATE TABLE `librarian` (
   `LibrarianID` int NOT NULL AUTO_INCREMENT,
   `FullName` varchar(30) NOT NULL,
   `UserName` varchar(30) NOT NULL,
-  `Password` varchar(30) NOT NULL,
+  `password` varchar(200) NOT NULL,
   `Email` varchar(30) NOT NULL,
+  `RegDate` date DEFAULT NULL,
   PRIMARY KEY (`LibrarianID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -164,7 +165,7 @@ CREATE TABLE `librarian` (
 
 LOCK TABLES `librarian` WRITE;
 /*!40000 ALTER TABLE `librarian` DISABLE KEYS */;
-INSERT INTO `librarian` VALUES (1,'Enco Sier','Encosier','1234','enco.cs.doc@gmail.com'),(2,'Leloush Britannia','Zero','9876','leloush.zero@bitannia.com');
+INSERT INTO `librarian` VALUES (1,'Enco Sier','Encosier','1234','enco.cs.doc@gmail.com',NULL),(2,'Leloush Britannia','Zero','9876','leloush.zero@bitannia.com',NULL),(3,'van thanh','thanh','877125dba3851ef662b2dd1b4b8ccf5c70b6a401a4dda9c41deb6e05c32a74ba','an6@gmail.com','2023-10-19');
 /*!40000 ALTER TABLE `librarian` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,12 +230,13 @@ DROP TABLE IF EXISTS `users`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
   `UserID` int NOT NULL AUTO_INCREMENT,
-  `UserPass` varchar(30) NOT NULL,
+  `UserPass` varchar(200) NOT NULL,
   `RegDate` date NOT NULL,
   `UserName` varchar(30) NOT NULL,
   `Email` varchar(30) NOT NULL,
+  `FullName` varchar(100) NOT NULL,
   PRIMARY KEY (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -243,7 +245,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'1234','2012-05-15','Deco','deco@gmail.com'),(2,'12345678','2016-11-07','Piyush','pkalkute@gmail.com'),(3,'012345','2016-11-25','NewHero','newhero@gmail.com');
+INSERT INTO `users` VALUES (1,'1234','2012-05-15','Deco','deco@gmail.com',''),(2,'12345678','2016-11-07','Piyush','pkalkute@gmail.com',''),(3,'012345','2016-11-25','NewHero','newhero@gmail.com',''),(4,'877125dba3851ef662b2dd1b4b8ccf5c70b6a401a4dda9c41deb6e05c32a74ba','2023-10-19','an','thanh@gmail.com',''),(5,'Anvip2003','2023-02-22','an','thanhtomy03@gmail.com','thanh an'),(6,'877125dba3851ef662b2dd1b4b8ccf5c70b6a401a4dda9c41deb6e05c32a74ba','2023-10-19','an','thanhtomy03@gmail.com','thanh');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -256,4 +258,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-18 22:12:22
+-- Dump completed on 2023-10-19 16:55:07
