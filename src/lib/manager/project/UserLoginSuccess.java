@@ -49,6 +49,7 @@ public class UserLoginSuccess extends javax.swing.JFrame {
         UserID = new javax.swing.JTextField();
         Email = new javax.swing.JTextField();
         RegDate = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -110,6 +111,13 @@ public class UserLoginSuccess extends javax.swing.JFrame {
 
         jLabel4.setText("Reg Date");
 
+        jButton1.setText("Log Out");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -132,8 +140,10 @@ public class UserLoginSuccess extends javax.swing.JFrame {
                     .addComponent(RegDate, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE))
                 .addGap(322, 322, 322)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(157, 157, 157))
         );
         jPanel1Layout.setVerticalGroup(
@@ -168,7 +178,9 @@ public class UserLoginSuccess extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(RegDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(330, Short.MAX_VALUE))
+                .addGap(219, 219, 219)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -196,6 +208,11 @@ public class UserLoginSuccess extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         UserView.main(new String[] {GetUserID});
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+        login.main(new String[]{});
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -231,20 +248,23 @@ public class UserLoginSuccess extends javax.swing.JFrame {
         String User=args[0];
         String Pass=args[1];
         try{
-			Connection Con;
+			System.out.println("an");
+                        Connection Con;
                         Con = DB.getConnection();
 			PreparedStatement ps;
                         ps = Con.prepareStatement("select * from Users where UserName=? and UserPass=?");
 			ps.setString(1,User);
 			ps.setString(2,Pass);
 			ResultSet rs;
-                          rs = ps.executeQuery();
-            boolean status = rs.next();
-            GetName = User;
-            GetRegDate = rs.getString("RegDate");
-            GetEmail = rs.getString("Email");
-            GetUserID = rs.getString("UserID");
-            Con.close();
+                        rs = ps.executeQuery();
+                        boolean status = rs.next();
+                        GetName = User;
+                        GetRegDate = String.valueOf(rs.getDate("RegDate"));
+
+                        GetEmail = rs.getString("Email");
+                        GetUserID = String.valueOf(rs.getInt("UserID")); 
+
+                        Con.close();
         
        
          }catch(Exception f){System.out.println(f);}
@@ -255,6 +275,7 @@ public class UserLoginSuccess extends javax.swing.JFrame {
     private javax.swing.JTextField Name;
     private javax.swing.JTextField RegDate;
     private javax.swing.JTextField UserID;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;

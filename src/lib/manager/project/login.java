@@ -15,6 +15,7 @@ public class login extends javax.swing.JFrame {
     private String Uname;
     private String Pass;
     private boolean IsLibrarian;
+    private String Pass_encrypted;
     public login() {
         initComponents();
     }
@@ -58,6 +59,7 @@ public class login extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
+        username.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         username.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usernameActionPerformed(evt);
@@ -93,6 +95,8 @@ public class login extends javax.swing.JFrame {
                 choiceActionPerformed(evt);
             }
         });
+
+        password.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel2.setFont(new java.awt.Font("Arial Black", 0, 36)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -182,6 +186,7 @@ public class login extends javax.swing.JFrame {
 
         Uname = username.getText();
         Pass = String.valueOf(password.getPassword());
+        Pass_encrypted = CryptPass.cryptPass(Pass);
         System.out.println(Uname+" "+Pass);
         if(IsLibrarian) {
             if(LibrarianDao.validate(Uname,Pass)) {
@@ -194,10 +199,10 @@ public class login extends javax.swing.JFrame {
                 password.setText("");
             }
         } else {
-            if(UsersDao.validate(Uname,Pass)) {
+            if(UsersDao.validate(Uname,Pass_encrypted)) {
                 this.dispose();
                 JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
-                UserLoginSuccess.main(new String[]{Uname,Pass});
+                UserLoginSuccess.main(new String[]{Uname,Pass_encrypted});
             }else{
                 JOptionPane.showMessageDialog(this, "Sai tài khoản hoặc mật khẩu1");
                 username.setText("");

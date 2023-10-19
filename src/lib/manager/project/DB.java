@@ -29,7 +29,7 @@ public class DB {
                             props.put("characterEncoding", "UTF-8"); // ensure charset is utf8 here
 
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/library?zeroDateTimeBehavior=CONVERT_TO_NULL",props);
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/library",props);
 		}catch(ClassNotFoundException | SQLException e){System.out.println(e);}
 		return con;
 	}
