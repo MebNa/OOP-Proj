@@ -22,7 +22,73 @@ public class signup extends javax.swing.JFrame {
 
     private boolean IsLibrarian;
     private int maxId;
+    private static String Uname,Pass,ConfirmPass,Email,FullName;
+    private boolean checkUsernameUser(String username) {
+        try {
+          Connection conn = DB.getConnection();
+          PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE username = ?");
+          stmt.setString(1, username);
+          ResultSet rs = stmt.executeQuery();
 
+          if(rs.next()) {
+            return true; 
+          }
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+
+        return false;
+    }
+    
+    private boolean checkEmailLibrarian(String email) {
+        try {
+          Connection conn = DB.getConnection();
+          PreparedStatement stmt = conn.prepareStatement("SELECT * FROM librarian WHERE email = ?");
+          stmt.setString(1, Email);
+          ResultSet rs = stmt.executeQuery();
+
+          if(rs.next()) {
+            return true;
+          }
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+
+        return false;
+    }
+    private boolean checkUsernameLibrarian(String username) {
+        try {
+          Connection conn = DB.getConnection();
+          PreparedStatement stmt = conn.prepareStatement("SELECT * FROM librarian WHERE username = ?");
+          stmt.setString(1, username);
+          ResultSet rs = stmt.executeQuery();
+
+          if(rs.next()) {
+            return true; 
+          }
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+
+        return false;
+    }
+    
+    private boolean checkEmailUser(String email) {
+        try {
+          Connection conn = DB.getConnection();
+          PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Users WHERE email = ?");
+          stmt.setString(1, Email);
+          ResultSet rs = stmt.executeQuery();
+
+          if(rs.next()) {
+            return true;
+          }
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+
+        return false;
+    }
     /**
      * Creates new form NewJFrame
      */
@@ -186,7 +252,7 @@ public class signup extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String Uname,Pass,ConfirmPass,Email,FullName;
+
         Uname = username.getText();
         Pass = String.valueOf(password.getPassword());  
         ConfirmPass = String.valueOf(confirmpassword.getPassword());
@@ -195,51 +261,59 @@ public class signup extends javax.swing.JFrame {
 
 
         if(Uname.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập tên đăng nhập");
+            JOptionPane.showMessageDialog(this, "Please enter your username");
             return;
         } else if(Uname.contains(" ")) {
-            JOptionPane.showMessageDialog(this, "Tên đăng nhập không được chứa dấu cách");
+            JOptionPane.showMessageDialog(this, "Username must not contain spaces");
             return;
         }
 
 
         if(Pass.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập mật khẩu");  
+            JOptionPane.showMessageDialog(this, "Please enter your password");  
             return;
         }else if(Pass.contains(" ")) {
-            JOptionPane.showMessageDialog(this, "Mật khẩu không được chứa dấu cách");
+            JOptionPane.showMessageDialog(this, "Password must not contain spaces");
             return;
         }else if(Pass.length() < 8) {
-        JOptionPane.showMessageDialog(this, "Mật khẩu phải có ít nhất 8 ký tự");
+            JOptionPane.showMessageDialog(this, "Password must be at least 8 characters long");
         return;
         }else if(!Pass.matches(".*\\d.*") || !Pass.matches(".*[a-zA-Z].*")) {
-        JOptionPane.showMessageDialog(this, "Mật khẩu phải chứa ít nhất một chữ số và một chữ cái");
+            JOptionPane.showMessageDialog(this, "Password must contain at least one digit and one letter");
         return;
         }
 
 
         if(!Pass.equals(ConfirmPass)) {
-            JOptionPane.showMessageDialog(this, "Mật khẩu xác nhận không khớp");
+            JOptionPane.showMessageDialog(this, "Confirm password does not match");
             return;
         }
 
 
         if(Email.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập email");
+            JOptionPane.showMessageDialog(this, "Please enter your email");
             return;
         }
         String Pass_encrypted = CryptPass.cryptPass(Pass);
 
         if(!Email.matches("\\w+@\\w+\\.\\w+")) {
-            JOptionPane.showMessageDialog(this, "Định dạng email không đúng");  
+            JOptionPane.showMessageDialog(this, "Invalid Email");  
             return;
-        }else if(!Email.contains("@") || !Email.contains(".")) {
-        JOptionPane.showMessageDialog(this, "Email phải chứa @ và .");
-        return;
         }
         
+        
+        
         if(IsLibrarian){
-            int response1 = JOptionPane.showConfirmDialog(null,"Bạn có chắc chắn muôn đăng kí là Librarian không?","Xác nhận",YES_NO_OPTION,QUESTION_MESSAGE);
+            if(checkUsernameLibrarian(Uname)) {
+                JOptionPane.showMessageDialog(this, "Username already exists");
+                return;
+            }
+
+            if(checkEmailLibrarian(Email)) {
+              JOptionPane.showMessageDialog(this, "Email already exists");
+              return;
+            }
+            int response1 = JOptionPane.showConfirmDialog(null,"Are you sure you want to register as a Librarian?","Confirm",YES_NO_OPTION,QUESTION_MESSAGE);
             if (response1 == JOptionPane.YES_OPTION){
                 Date now = new Date();
                 java.sql.Date sqlDate = new java.sql.Date(now.getTime());
@@ -264,16 +338,26 @@ public class signup extends javax.swing.JFrame {
                     int rowsInserted = statement.executeUpdate();
 
                     if (rowsInserted > 0) {
-                        JOptionPane.showMessageDialog(this, "Đăng ký Librarian thành công");
+                        JOptionPane.showMessageDialog(this, "Successfully registered as a Librarian");
                     }
-                    conn.close();
+
+                    
                 }catch(HeadlessException | SQLException e){System.out.println(e);
 
 
                 }
             }
         }else{
-            int response2 = JOptionPane.showConfirmDialog(null,"Bạn có chắc chắn muôn đăng kí là User không?","Xác nhận",YES_NO_OPTION,QUESTION_MESSAGE);
+            if(checkUsernameUser(Uname)) {
+                JOptionPane.showMessageDialog(this, "Username already exists");
+                return;
+            }
+
+            if(checkEmailUser(Email)) {
+              JOptionPane.showMessageDialog(this, "Email already exists");
+              return;
+            }
+            int response2 = JOptionPane.showConfirmDialog(null,"Are you sure you want to register as an User?","Confirm",YES_NO_OPTION,QUESTION_MESSAGE);
             if (response2 == JOptionPane.YES_OPTION){
                 Date now = new Date();
                 java.sql.Date sqlDate = new java.sql.Date(now.getTime());
@@ -298,7 +382,7 @@ public class signup extends javax.swing.JFrame {
                     int rowsInserted = statement.executeUpdate();
 
                     if (rowsInserted > 0) {
-                        JOptionPane.showMessageDialog(this, "Đăng ký Users thành công");
+                        JOptionPane.showMessageDialog(this, "Successfully registered as an User");
                     }
                     conn.close();
                 }catch(HeadlessException | SQLException e){System.out.println(e);
@@ -341,7 +425,7 @@ public class signup extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             new signup().setVisible(true);
         });
-    }
+        }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> choice;

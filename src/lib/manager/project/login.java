@@ -207,24 +207,22 @@ public class login extends javax.swing.JFrame {
         Uname = username.getText();
         Pass = String.valueOf(password.getPassword());
         Pass_encrypted = CryptPass.cryptPass(Pass);
-        System.out.println(Uname+" "+Pass);
         if(IsLibrarian) {
             if(LibrarianDao.validate(Uname,Pass_encrypted)) {
                 this.dispose();
                 JOptionPane.showMessageDialog(this, "Login Success");
                 LibrarianSuccess.main(new String[]{Uname,Pass_encrypted});
             }else{
-                JOptionPane.showMessageDialog(this, "Sai tài khoản hoặc mật khẩu");
+                JOptionPane.showMessageDialog(this, "Incorrect username or password");
                 username.setText("");
-                password.setText("");
             }
         } else {
             if(UsersDao.validate(Uname,Pass_encrypted)) {
                 this.dispose();
-                JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
+                JOptionPane.showMessageDialog(this, "Login Success1");
                 UserLoginSuccess.main(new String[]{Uname,Pass_encrypted});
             }else{
-                JOptionPane.showMessageDialog(this, "Sai tài khoản hoặc mật khẩu1");
+                JOptionPane.showMessageDialog(this, "Incorrect username or password1");
                 username.setText("");
                 password.setText("");
             }
@@ -233,14 +231,14 @@ public class login extends javax.swing.JFrame {
 
     private void choiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_choiceActionPerformed
         String selectedItem = (String)choice.getSelectedItem();
-        System.out.println("Lua chon la:" + selectedItem);
+
 
   
         if(selectedItem.equals("Librarian")) {
             IsLibrarian = true;
  
         }else{
-            boolean Islibrarian = false;
+            IsLibrarian = false;
         }
         
 
