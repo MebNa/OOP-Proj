@@ -20,25 +20,24 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author bikash
  */
-public class UserViewBook extends javax.swing.JFrame {
+public class AllStudent extends javax.swing.JFrame {
 
     /**
      * Creates new form ViewBook
      * @throws java.sql.SQLException
      */
-    public UserViewBook() throws SQLException {
+    public AllStudent() throws SQLException {
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        
         initComponents();
         DefaultTableModel model;
         model = (DefaultTableModel) jTable1.getModel();
        // String Data[][]=null;
       //  String Column[]=null;
         try(Connection Con = DB.getConnection()) {
-            PreparedStatement ps=Con.prepareStatement("select Books.BookID, Books.BookName,Books.Genre,Books.Author,Books.Publisher, Books.Row,Books.Shelf, IssuedBook.UserID from Books left outer join IssuedBook on Books.BookID= IssuedBook.BookID;",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            PreparedStatement ps=Con.prepareStatement("select userid,fullname,username,email,regdate from Users",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             ResultSet rs= ps.executeQuery();
             
-            ResultSetMetaData rsmd = rs.getMetaData();
+           ResultSetMetaData rsmd = rs.getMetaData();
   
             int colnum=rsmd.getColumnCount();
         
@@ -57,24 +56,12 @@ public class UserViewBook extends javax.swing.JFrame {
             
             int count=0; */
             String Row[];
-            String Check="";
             Row = new String[colnum];
             while(rs.next()){
                 for(int i=1;i<=colnum;i++){
-                    if(i==colnum)
-                    {
-                        if(rs.getString(i)==null)
-                            Row[i-1]="Not Issued";
-                        else
-                            Row[i-1]="Issued";
-                        System.out.println(rs.getString(i));
-                    }
-                  else
                     Row[i-1]=rs.getString(i);
-            
                     }
                  model.addRow(Row);
-                  
             }
    
                     //count++;
@@ -94,21 +81,17 @@ public class UserViewBook extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jProgressBar1 = new javax.swing.JProgressBar();
+        buttonGroup3 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         NameRadio = new javax.swing.JRadioButton();
         AuthorRadio = new javax.swing.JRadioButton();
         ALL = new javax.swing.JRadioButton();
-        NotIssued = new javax.swing.JRadioButton();
         SearchField = new javax.swing.JTextField();
         Search = new javax.swing.JButton();
-        ShowALL = new javax.swing.JButton();
-        jProgressBar2 = new javax.swing.JProgressBar();
-
-        jProgressBar1.setBackground(new java.awt.Color(204, 204, 255));
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -116,14 +99,14 @@ public class UserViewBook extends javax.swing.JFrame {
             new Object [][] {
             },
             new String [] {
-                "Book ID", "Name", "Genre", "Author", "Publisher", "Shelf", "Row", "Available"
+                "User ID", "UserPass", "RegDate", "UserName", "Email"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Long.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Long.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false,  false,false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -135,10 +118,6 @@ public class UserViewBook extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-
-        jLabel1.setFont(new java.awt.Font("Ubuntu", 0, 36)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Books");
 
         jButton1.setText("Close");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -154,7 +133,8 @@ public class UserViewBook extends javax.swing.JFrame {
             }
         });
 
-        AuthorRadio.setText("Author");
+        AuthorRadio.setText("Email");
+        AuthorRadio.setToolTipText("");
         AuthorRadio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AuthorRadioActionPerformed(evt);
@@ -168,10 +148,9 @@ public class UserViewBook extends javax.swing.JFrame {
             }
         });
 
-        NotIssued.setText("NOT ISSUED");
-        NotIssued.addActionListener(new java.awt.event.ActionListener() {
+        SearchField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NotIssuedActionPerformed(evt);
+                SearchFieldActionPerformed(evt);
             }
         });
 
@@ -182,71 +161,74 @@ public class UserViewBook extends javax.swing.JFrame {
             }
         });
 
-        ShowALL.setText("Show All");
-        ShowALL.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ShowALLActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ALL))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(118, 118, 118)
+                        .addComponent(NameRadio)
+                        .addGap(46, 46, 46)
+                        .addComponent(AuthorRadio)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 349, Short.MAX_VALUE)
+                        .addComponent(SearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Search)
+                .addGap(87, 87, 87))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(ALL)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Search)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(NameRadio)
+                        .addComponent(AuthorRadio))))
+        );
 
-        jProgressBar2.setBackground(new java.awt.Color(204, 204, 255));
+        jLabel8.setFont(new java.awt.Font("Arial Black", 0, 36)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("All Student");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(66, 66, 66)
-                .addComponent(ALL)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(NotIssued)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(ShowALL)
-                .addGap(52, 52, 52)
-                .addComponent(SearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Search)
-                .addGap(72, 72, 72))
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jProgressBar2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(637, 637, 637)
-                        .addComponent(NameRadio)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(AuthorRadio))
+                        .addGap(6, 6, 6)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(25, 25, 25)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 831, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(405, 405, 405)
-                        .addComponent(jButton1)))
-                .addContainerGap(44, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 984, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(475, 475, 475))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jLabel1)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(NameRadio)
-                    .addComponent(AuthorRadio))
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ShowALL, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(SearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Search)
-                        .addComponent(ALL)
-                        .addComponent(NotIssued)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
                 .addComponent(jButton1)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addGap(60, 60, 60))
         );
 
         pack();
@@ -257,21 +239,20 @@ public class UserViewBook extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void SearchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SearchFieldActionPerformed
+
+    private void NameRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NameRadioActionPerformed
+        // TODO add your handling code here:
+        AuthorRadio.setSelected(false);
+        ALL.setSelected(false);
+    }//GEN-LAST:event_NameRadioActionPerformed
+
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
         // TODO add your handling code here:
-        if(SearchField.getText()=="")
-      JOptionPane.showMessageDialog(UserViewBook.this, "Search Filed is Empty","Search Error!", JOptionPane.ERROR_MESSAGE);
-
-        if(!ALL.isSelected())
-            if(!NotIssued.isSelected())
-            ALL.setEnabled(true);
         
-        int flag=0;
-        if(ALL.isSelected())
-            flag=0;
-        if(NotIssued.isSelected())
-            flag=1;
-        DefaultTableModel model;
+                    DefaultTableModel model;
         model = (DefaultTableModel) jTable1.getModel();
         while(model.getRowCount()>0)
             model.removeRow(model.getRowCount()-1);
@@ -281,7 +262,7 @@ public class UserViewBook extends javax.swing.JFrame {
       //  String Column[]=null;
             String Search = "%"+SearchField.getText()+"%";
         try(Connection Con = DB.getConnection()) {
-            PreparedStatement ps=Con.prepareStatement("select A.BookID, A.BookName,A.Genre,A.Author,A.Publisher, A.Row,A.Shelf, IssuedBook.UserID from (select * from Books where BookName like ?) as A left outer join IssuedBook on A.BookID= IssuedBook.BookID",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            PreparedStatement ps=Con.prepareStatement("select * from Users where UserName like ?",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             ps.setString(1, Search);
             ResultSet rs= ps.executeQuery();
             
@@ -296,33 +277,9 @@ public class UserViewBook extends javax.swing.JFrame {
             Row = new String[colnum];
             while(rs.next()){
                 for(int i=1;i<=colnum;i++){
-                    if(i==colnum)
-                    {
-                        if(rs.getString(i)==null)
-                        {
-                            Row[i-1]="Not Issued";
-                            model.addRow(Row);
-                        }
-                        else
-                        {
-                            if(flag==1)
-                                continue;
-                            Row[i-1]="Issued";
-                            model.addRow(Row);
-                            
-                        }
-                        
-            
-                        
-                        System.out.println(rs.getString(i));
-                    }
-                  else
                     Row[i-1]=rs.getString(i);
-                
-                        
                     }
-        
-               
+                 model.addRow(Row);
             }
             int rowcount = model.getRowCount();
              System.out.println(rowcount);
@@ -330,11 +287,11 @@ public class UserViewBook extends javax.swing.JFrame {
             {
                 String NoRow[];
                 NoRow = new String[7];
-                NoRow[3]="NO";
-                NoRow[4]="RESULT";
+                NoRow[1]="NO";
+                NoRow[2]="RESULT";
                 NoRow[0]="";
-                NoRow[1]="";
-                NoRow[2]="";
+                NoRow[3]="";
+                NoRow[4]="";
                 NoRow[5]="";
                 NoRow[6]="";
                 model.addRow(NoRow);
@@ -356,7 +313,7 @@ public class UserViewBook extends javax.swing.JFrame {
       //  String Column[]=null;
             String Search = "%"+SearchField.getText()+"%";
         try(Connection Con = DB.getConnection()) {
-            PreparedStatement ps=Con.prepareStatement("select A.BookID, A.BookName,A.Genre,A.Author,A.Publisher, A.Row,A.Shelf, IssuedBook.UserID from (select * from Books where Author like ?) as A left outer join IssuedBook on A.BookID= IssuedBook.BookID",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            PreparedStatement ps=Con.prepareStatement("select * from Users where Email like ?",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             ps.setString(1, Search);
             ResultSet rs= ps.executeQuery();
             
@@ -371,26 +328,9 @@ public class UserViewBook extends javax.swing.JFrame {
             Row = new String[colnum];
             while(rs.next()){
                 for(int i=1;i<=colnum;i++){
-                    if(i==colnum)
-                    {
-                        if(rs.getString(i)==null)
-                        {
-                            Row[i-1]="Not Issued";
-                            model.addRow(Row);
-                        }
-                        else
-                        {
-                            if(flag==1)
-                                continue;
-                            Row[i-1]="Issued";
-                            model.addRow(Row);
-                        }
-                        System.out.println(rs.getString(i));
-                    }
-                  else
                     Row[i-1]=rs.getString(i);
                     }
-          
+                 model.addRow(Row);
             }
             int rowcount = model.getRowCount();
              System.out.println(rowcount);
@@ -398,11 +338,11 @@ public class UserViewBook extends javax.swing.JFrame {
             {
                 String NoRow[];
                 NoRow = new String[7];
-                NoRow[3]="NO";
-                NoRow[4]="RESULT";
+                NoRow[1]="NO";
+                NoRow[2]="RESULT";
                 NoRow[0]="";
-                NoRow[1]="";
-                NoRow[2]="";
+                NoRow[3]="";
+                NoRow[4]="";
                 NoRow[5]="";
                 NoRow[6]="";
                 model.addRow(NoRow);
@@ -421,63 +361,50 @@ public class UserViewBook extends javax.swing.JFrame {
         else
         {
             
-				JOptionPane.showMessageDialog(UserViewBook.this, "Select Name or Author","No Selection!", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(AllStudent.this, "Select Name or Email","No Selection!", JOptionPane.ERROR_MESSAGE);
         }
+                
+                  /*   Column = new String[colnum];
+            for(int i=1;i<=colnum;i++){
+               Column[i-1]=rsmd.getColumnClassName(i);
+                }
+            rs.last();
+            
+            int rows=rs.getRow();
+            rs.beforeFirst();
+            
+            String[][] data = new String[rows][colnum];
+            
+            int count=0; */
+            
     }//GEN-LAST:event_SearchActionPerformed
 
     private void AuthorRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AuthorRadioActionPerformed
         // TODO add your handling code here:
         NameRadio.setSelected(false);
+        ALL.setSelected(false);
     }//GEN-LAST:event_AuthorRadioActionPerformed
-
-    private void NameRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NameRadioActionPerformed
-        // TODO add your handling code here:
-        AuthorRadio.setSelected(false);
-    }//GEN-LAST:event_NameRadioActionPerformed
 
     private void ALLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ALLActionPerformed
         // TODO add your handling code here:
-        NotIssued.setSelected(false);
-      
-    }//GEN-LAST:event_ALLActionPerformed
-
-    private void NotIssuedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NotIssuedActionPerformed
-        // TODO add your handling code here:
-        ALL.setSelected(false);
-        
-    }//GEN-LAST:event_NotIssuedActionPerformed
-
-    private void ShowALLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowALLActionPerformed
-        // TODO add your handling code here:
-        AuthorRadio.setSelected(false);
-        NameRadio.setSelected(false);
+          NameRadio.setSelected(false);
+          AuthorRadio.setSelected(false);
+          SearchField.setText("");
           DefaultTableModel model;
         model = (DefaultTableModel) jTable1.getModel();
-         while(model.getRowCount()>0)
+          while(model.getRowCount()>0)
             model.removeRow(model.getRowCount()-1);
-         
-         
-         if(!ALL.isSelected()&&!NotIssued.isSelected())
-         {
-             ALL.setSelected(true);
-         }
-         
-         
-         int flag=0;
-         if(ALL.isSelected())
-             flag=0;
-         if(NotIssued.isSelected())
-             flag=1;
        // String Data[][]=null;
       //  String Column[]=null;
         try(Connection Con = DB.getConnection()) {
-            PreparedStatement ps=Con.prepareStatement("select Books.BookID, Books.BookName,Books.Genre,Books.Author,Books.Publisher, Books.Row,Books.Shelf, IssuedBook.UserID from Books left outer join IssuedBook on Books.BookID= IssuedBook.BookID;",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            PreparedStatement ps=Con.prepareStatement("select * from Users",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             ResultSet rs= ps.executeQuery();
             
            ResultSetMetaData rsmd = rs.getMetaData();
   
             int colnum=rsmd.getColumnCount();
         
+          
             
             
          /*   Column = new String[colnum];
@@ -493,31 +420,12 @@ public class UserViewBook extends javax.swing.JFrame {
             
             int count=0; */
             String Row[];
-            String Check="";
             Row = new String[colnum];
             while(rs.next()){
                 for(int i=1;i<=colnum;i++){
-                    if(i==colnum)
-                    {
-                         if(rs.getString(i)==null)
-                        {
-                            Row[i-1]="Not Issued";
-                            model.addRow(Row);
-                        }
-                        else
-                        {
-                            if(flag==1)
-                                continue;
-                            Row[i-1]="Issued";
-                            model.addRow(Row);
-                        }
-                        System.out.println(rs.getString(i));
-                    }
-                  else
                     Row[i-1]=rs.getString(i);
-            
                     }
-                  
+                 model.addRow(Row);
             }
    
                     //count++;
@@ -526,7 +434,7 @@ public class UserViewBook extends javax.swing.JFrame {
            Con.close();
         }catch(Exception e){System.out.println(e);
     }
-    }//GEN-LAST:event_ShowALLActionPerformed
+    }//GEN-LAST:event_ALLActionPerformed
 
     /**
      * @param args the command line arguments
@@ -545,14 +453,16 @@ public class UserViewBook extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UserViewBook.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AllStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UserViewBook.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AllStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UserViewBook.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AllStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UserViewBook.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AllStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
@@ -560,9 +470,9 @@ public class UserViewBook extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new UserViewBook().setVisible(true);
+                    new AllStudent().setVisible(true);
                 } catch (SQLException ex) {
-                    Logger.getLogger(UserViewBook.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AllStudent.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -572,14 +482,12 @@ public class UserViewBook extends javax.swing.JFrame {
     private javax.swing.JRadioButton ALL;
     private javax.swing.JRadioButton AuthorRadio;
     private javax.swing.JRadioButton NameRadio;
-    private javax.swing.JRadioButton NotIssued;
     private javax.swing.JButton Search;
     private javax.swing.JTextField SearchField;
-    private javax.swing.JButton ShowALL;
+    private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JProgressBar jProgressBar1;
-    private javax.swing.JProgressBar jProgressBar2;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

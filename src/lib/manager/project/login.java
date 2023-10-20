@@ -191,6 +191,7 @@ public class login extends javax.swing.JFrame {
         if(IsLibrarian) {
             if(LibrarianDao.validate(Uname,Pass_encrypted)) {
                 this.dispose();
+                JOptionPane.showMessageDialog(this, "Login Success");
                 LibrarianSuccess.main(new String[]{Uname,Pass_encrypted});
             }else{
                 JOptionPane.showMessageDialog(this, "Sai tài khoản hoặc mật khẩu");

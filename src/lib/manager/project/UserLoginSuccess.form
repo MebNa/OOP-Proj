@@ -97,10 +97,8 @@
                   <EmptySpace min="-2" pref="322" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jButton1" pref="102" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jButton3" pref="102" max="32767" attributes="0"/>
-                          <Component id="jButton2" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="jButton3" pref="102" max="32767" attributes="0"/>
+                      <Component id="jButton2" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="157" max="-2" attributes="0"/>
               </Group>
@@ -116,7 +114,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
-                          <Component id="jButton3" pref="62" max="32767" attributes="0"/>
+                          <Component id="jButton3" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
@@ -148,9 +146,9 @@
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="219" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="209" max="-2" attributes="0"/>
                   <Component id="jButton1" min="-2" pref="59" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -224,6 +222,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="33" green="33" red="ff" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Log Out"/>
           </Properties>
           <Events>

@@ -12,12 +12,12 @@ import javax.swing.JOptionPane;
  *
  * @author bikash
  */
-public class UserForm extends javax.swing.JFrame {
+public class AddUserForm extends javax.swing.JFrame {
 
     /**
      * Creates new form BookForm
      */
-    public UserForm() {
+    public AddUserForm() {
         initComponents();
     }
 
@@ -231,7 +231,7 @@ public class UserForm extends javax.swing.JFrame {
          String User = UserName.getText();
          if(UsersDao.CheckIfAlready(User))
          {
-             JOptionPane.showMessageDialog(UserForm.this, "UserName already taken!","Adding new User Error!", JOptionPane.ERROR_MESSAGE);
+             JOptionPane.showMessageDialog(AddUserForm.this, "UserName already taken!","Adding new User Error!", JOptionPane.ERROR_MESSAGE);
          }
          else
          {
@@ -247,7 +247,7 @@ public class UserForm extends javax.swing.JFrame {
                 
                 if(UsersDao.AddUser(User,UserPass,UserEmail,Date)!=0)
                 {
-                    JOptionPane.showMessageDialog(UserForm.this, "User is Added Successfully!","Adding New User!", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(AddUserForm.this, "User is Added Successfully!","Adding New User!", JOptionPane.ERROR_MESSAGE);
                     UserName.setText("");
                     Password.setText("");
                     Email.setText("");
@@ -256,7 +256,7 @@ public class UserForm extends javax.swing.JFrame {
                     Year.setText("");
                 }
                 else
-                       JOptionPane.showMessageDialog(UserForm.this, "Unable to add new User","Adding new User Error!", JOptionPane.ERROR_MESSAGE);
+                       JOptionPane.showMessageDialog(AddUserForm.this, "Unable to add new User","Adding new User Error!", JOptionPane.ERROR_MESSAGE);
 
         
          }
@@ -279,14 +279,18 @@ public class UserForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UserForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddUserForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UserForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddUserForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UserForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddUserForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UserForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddUserForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -295,7 +299,7 @@ public class UserForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UserForm().setVisible(true);
+                new AddUserForm().setVisible(true);
             }
         });
     }
