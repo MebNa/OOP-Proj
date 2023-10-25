@@ -19,7 +19,7 @@ import static javax.swing.JOptionPane.YES_NO_OPTION;
  * @author AnBewwwwwww
  */
 public class signup extends javax.swing.JFrame {
-
+    private boolean registrationEnabled = false;
     private boolean IsLibrarian;
     private int maxId;
     private static String Uname,Pass,ConfirmPass,Email,FullName;
@@ -303,88 +303,94 @@ public class signup extends javax.swing.JFrame {
         
         
         if(IsLibrarian){
-            if(checkUsernameLibrarian(Uname)) {
-                JOptionPane.showMessageDialog(this, "Username already exists");
-                return;
-            }
-
-            if(checkEmailLibrarian(Email)) {
-              JOptionPane.showMessageDialog(this, "Email already exists");
-              return;
-            }
-            int response1 = JOptionPane.showConfirmDialog(null,"Are you sure you want to register as a Librarian?","Confirm",YES_NO_OPTION,QUESTION_MESSAGE);
-            if (response1 == JOptionPane.YES_OPTION){
-                Date now = new Date();
-                java.sql.Date sqlDate = new java.sql.Date(now.getTime());
-                try {
-                    Connection conn = DB.getConnection();
-                    PreparedStatement stmt = conn.prepareStatement("select max(librarianid) as maxId from librarian");
-                    ResultSet rs =stmt.executeQuery();
-                    int maxId = 0;
-                    if(rs.next()){
-                        maxId = rs.getInt("maxId");
-                    }
-                    int librarianId = maxId +1;
-                    PreparedStatement statement = conn.prepareStatement("INSERT INTO librarian (LibrarianID,Fullname,UserName,Password,Email,RegDate) VALUES (?, ?, ?,?,?,?)");
-
-                    statement.setInt(1, librarianId);
-                    statement.setString(2, FullName);
-                    statement.setString(3,Uname);
-                    statement.setString(4, Pass_encrypted);
-                    statement.setString(5, Email);
-                    statement.setDate(6, sqlDate);
-                    
-                    int rowsInserted = statement.executeUpdate();
-
-                    if (rowsInserted > 0) {
-                        JOptionPane.showMessageDialog(this, "Successfully registered as a Librarian");
-                    }
-
-                    
-                }catch(HeadlessException | SQLException e){System.out.println(e);
-
-
+            if (registrationEnabled){
+                if(checkUsernameLibrarian(Uname)) {
+                    JOptionPane.showMessageDialog(this, "Username already exists");
+                    return;
                 }
-            }
-        }else{
-            if(checkUsernameUser(Uname)) {
-                JOptionPane.showMessageDialog(this, "Username already exists");
-                return;
-            }
 
-            if(checkEmailUser(Email)) {
-              JOptionPane.showMessageDialog(this, "Email already exists");
-              return;
-            }
-            int response2 = JOptionPane.showConfirmDialog(null,"Are you sure you want to register as an User?","Confirm",YES_NO_OPTION,QUESTION_MESSAGE);
-            if (response2 == JOptionPane.YES_OPTION){
-                Date now = new Date();
-                java.sql.Date sqlDate = new java.sql.Date(now.getTime());
-                try {
-                    Connection conn = DB.getConnection();
-                    PreparedStatement stmt = conn.prepareStatement("select max(userid) as maxId from users");
-                    ResultSet rs =stmt.executeQuery();
-                    int maxId = 0;
-                    if(rs.next()){
-                        maxId = rs.getInt("maxId");
-                    }
-                    int userId = maxId +1;
-                    PreparedStatement statement = conn.prepareStatement("INSERT INTO users (UserID,UserPass,RegDate,UserName, Email,FullName) VALUES (?, ?, ?,?,?,?)");
-                    
-                    statement.setInt(1, userId);
-                    statement.setString(2, Pass_encrypted);
-                    statement.setDate(3, sqlDate);
-                    statement.setString(4, Uname);
-                    statement.setString(5, Email);
-                    statement.setString(6, FullName);
-                    int rowsInserted = statement.executeUpdate();
-
-                    if (rowsInserted > 0) {
-                        JOptionPane.showMessageDialog(this, "Successfully registered as an User");
-                    }
-                    conn.close();
-                }catch(HeadlessException | SQLException e){System.out.println(e);
+                if(checkEmailLibrarian(Email)) {
+                  JOptionPane.showMessageDialog(this, "Email already exists");
+                  return;
                 }
+                int response1 = JOptionPane.showConfirmDialog(null,"Are you sure you want to register as a Librarian?","Confirm",YES_NO_OPTION,QUESTION_MESSAGE);
+                if (response1 == JOptionPane.YES_OPTION){
+                    Date now = new Date();
+                    java.sql.Date sqlDate = new java.sql.Date(now.getTime());
+                    try {
+                        Connection conn = DB.getConnection();
+                        PreparedStatement stmt = conn.prepareStatement("select max(librarianid) as maxId from librarian");
+                        ResultSet rs =stmt.executeQuery();
+                        int maxId = 0;
+                        if(rs.next()){
+                            maxId = rs.getInt("maxId");
+                        }
+                        int librarianId = maxId +1;
+                        PreparedStatement statement = conn.prepareStatement("INSERT INTO librarian (LibrarianID,Fullname,UserName,Password,Email,RegDate) VALUES (?, ?, ?,?,?,?)");
+
+                        statement.setInt(1, librarianId);
+                        statement.setString(2, FullName);
+                        statement.setString(3,Uname);
+                        statement.setString(4, Pass_encrypted);
+                        statement.setString(5, Email);
+                        statement.setDate(6, sqlDate);
+
+                        int rowsInserted = statement.executeUpdate();
+
+                        if (rowsInserted > 0) {
+                            JOptionPane.showMessageDialog(this, "Successfully registered as a Librarian");
+                        }
+
+
+                    }catch(HeadlessException | SQLException e){System.out.println(e);
+
+
+                    }
+                }
+            
+                else{
+                    if(checkUsernameUser(Uname)) {
+                        JOptionPane.showMessageDialog(this, "Username already exists");
+                        return;
+                    }
+
+                    if(checkEmailUser(Email)) {
+                      JOptionPane.showMessageDialog(this, "Email already exists");
+                      return;
+                    }
+                    int response2 = JOptionPane.showConfirmDialog(null,"Are you sure you want to register as an User?","Confirm",YES_NO_OPTION,QUESTION_MESSAGE);
+                    if (response2 == JOptionPane.YES_OPTION){
+                        Date now = new Date();
+                        java.sql.Date sqlDate = new java.sql.Date(now.getTime());
+                        try {
+                            Connection conn = DB.getConnection();
+                            PreparedStatement stmt = conn.prepareStatement("select max(userid) as maxId from users");
+                            ResultSet rs =stmt.executeQuery();
+                            int maxId = 0;
+                            if(rs.next()){
+                                maxId = rs.getInt("maxId");
+                            }
+                            int userId = maxId +1;
+                            PreparedStatement statement = conn.prepareStatement("INSERT INTO users (UserID,UserPass,RegDate,UserName, Email,FullName) VALUES (?, ?, ?,?,?,?)");
+
+                            statement.setInt(1, userId);
+                            statement.setString(2, Pass_encrypted);
+                            statement.setDate(3, sqlDate);
+                            statement.setString(4, Uname);
+                            statement.setString(5, Email);
+                            statement.setString(6, FullName);
+                            int rowsInserted = statement.executeUpdate();
+
+                            if (rowsInserted > 0) {
+                                JOptionPane.showMessageDialog(this, "Successfully registered as an User");
+                            }
+                            conn.close();
+                        }catch(HeadlessException | SQLException e){System.out.println(e);
+                        }
+                    }
+                }
+            }else{
+                JOptionPane.showMessageDialog(this, "This function is currently temporarily disabled");
             }
         }
         
