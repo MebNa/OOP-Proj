@@ -99,7 +99,7 @@ public class AllStudent extends javax.swing.JFrame {
             new Object [][] {
             },
             new String [] {
-                "User ID", "UserPass", "RegDate", "UserName", "Email"
+                "User ID", "FullName", "RegDate", "UserName", "Email"
             }
         ) {
             Class[] types = new Class [] {
@@ -186,12 +186,13 @@ public class AllStudent extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(ALL)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(SearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Search)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(NameRadio)
-                        .addComponent(AuthorRadio))))
+                        .addComponent(AuthorRadio))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(SearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Search))))
         );
 
         jLabel8.setFont(new java.awt.Font("Arial Black", 0, 36)); // NOI18N
@@ -406,19 +407,6 @@ public class AllStudent extends javax.swing.JFrame {
         
           
             
-            
-         /*   Column = new String[colnum];
-            for(int i=1;i<=colnum;i++){
-               Column[i-1]=rsmd.getColumnClassName(i);
-                }
-            rs.last();
-            
-            int rows=rs.getRow();
-            rs.beforeFirst();
-            
-            String[][] data = new String[rows][colnum];
-            
-            int count=0; */
             String Row[];
             Row = new String[colnum];
             while(rs.next()){

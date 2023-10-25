@@ -249,7 +249,6 @@ public class UserLoginSuccess extends javax.swing.JFrame {
         String User=args[0];
         String Pass=args[1];
         try{
-			System.out.println("an");
                         Connection Con;
                         Con = DB.getConnection();
 			PreparedStatement ps;

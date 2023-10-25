@@ -60,6 +60,7 @@ public static int save(String callno,String name,String author,String publisher,
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
+
         try {
             conn = DB.getConnection();
             stmt = conn.prepareStatement("select max(bookid) as maxBookId from books");
@@ -69,7 +70,10 @@ public static int save(String callno,String name,String author,String publisher,
                 maxBookId = rs.getInt("maxBookId");
             }
             int BookID = maxBookId + 1;
-            PreparedStatement ps = conn.prepareStatement("insert into Books(BookId,BookName,Author,Genre,Publisher,`Shelf`, `Row`) values(?,?,?,?,?,?,?)");
+            java.util.Date currentDate = new java.util.Date();
+            java.sql.Date regDate = new java.sql.Date(currentDate.getTime());
+            PreparedStatement ps;
+            ps = conn.prepareStatement("insert into Books(BookId, BookName, Author, Genre, Publisher, `Shelf`, `Row`, RegBookDate) values(?, ?, ?, ?, ?, ?, ?, ?)");
             ps.setInt(1, BookID);
             ps.setString(2, BookN);
             ps.setString(3, AuthorN);
@@ -77,6 +81,7 @@ public static int save(String callno,String name,String author,String publisher,
             ps.setString(5, PublisherN);
             ps.setString(6, ShelfN);
             ps.setString(7, RowN);
+            ps.setDate(8, regDate);
             status = ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
@@ -86,10 +91,10 @@ public static int save(String callno,String name,String author,String publisher,
                 if (stmt != null) stmt.close();
                 if (conn != null) conn.close();
             } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
         return status;
+        }
+
     }
 
     

@@ -118,7 +118,7 @@ public static int IssueBook(int BookID, int UserID, String IDate, String RDate)
         ps.setInt(2, UserID);
         status =ps.executeUpdate();
         con.close();
-}catch(Exception e){System.out.println(e);}
+    }catch(Exception e){System.out.println(e);}
     return status;
 }
 

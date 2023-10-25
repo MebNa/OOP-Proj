@@ -243,7 +243,6 @@ public class signup extends javax.swing.JFrame {
         }else{
             IsLibrarian = false;
         }
-        System.out.println(IsLibrarian);
     }//GEN-LAST:event_choiceActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -378,7 +377,6 @@ public class signup extends javax.swing.JFrame {
                     statement.setString(4, Uname);
                     statement.setString(5, Email);
                     statement.setString(6, FullName);
-                    System.out.println(statement);
                     int rowsInserted = statement.executeUpdate();
 
                     if (rowsInserted > 0) {
